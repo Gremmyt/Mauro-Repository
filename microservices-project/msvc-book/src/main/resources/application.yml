@@ -1,0 +1,10 @@
+# POSTGRESQL
+
+spring:
+  application:
+    name: msvc-book
+
+  config:
+    import: optional:configserver:http://localhost:8888
+
+

@@ -1,0 +1,11 @@
+# MYSQL
+
+spring:
+  application:
+    name: msvc-author
+
+
+  config:
+    import: optional:configserver:http://localhost:8888
+
+
