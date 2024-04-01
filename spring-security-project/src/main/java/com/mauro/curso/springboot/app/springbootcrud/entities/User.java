@@ -49,10 +49,6 @@ public class User {
     )
     private List<Role> roles;
 
-    // Lombok lo marca como si ya lo tuviera
-/*    public User(){
-        roles = new ArrayList<>();
-    }*/
 
     private boolean enabled;
 

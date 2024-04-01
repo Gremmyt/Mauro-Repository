@@ -27,6 +27,12 @@ public class UserController {
         return service.findAll();
     }
 
+    /**
+     * Endpoint that may be used to create an Admin.
+     * @param user with the new admin information.
+     * @param result used to handle validations.
+     * @return the created admin.
+     */
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<?> create(@Valid @RequestBody User user, BindingResult result) {
@@ -36,6 +42,12 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.save(user));
     }
 
+    /**
+     * Endpoint that anyone can use to create a regular User.
+     * @param user with the new user information.
+     * @param result used to handle validations.
+     * @return created user.
+     */
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody User user, BindingResult result) {
         if (result.hasFieldErrors()){

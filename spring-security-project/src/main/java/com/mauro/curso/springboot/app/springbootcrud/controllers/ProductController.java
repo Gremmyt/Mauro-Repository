@@ -26,12 +26,21 @@ public class ProductController {
 
 /*    private ProductValidation validation;*/
 
+    /**
+     * Endpoint used to get the products in a database.
+     * @return List of all available products in the database.
+     */
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public List<Product> list(){
         return service.findAll();
     }
 
+    /**
+     * Endpoint used to get a specific product by its ID.
+     * @param id in the endpoint's path.
+     * @return product if exists or http status 404 if not.
+     */
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<?> view (@PathVariable Long id){
@@ -43,6 +52,12 @@ public class ProductController {
         return ResponseEntity.notFound().build();
     }
 
+    /**
+     * Endpoint used to create a newc product.
+     * @param product used to create a product.
+     * @param result used to handle validations.
+     * @return created product or validation message.
+     */
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> create(
@@ -55,6 +70,13 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.CREATED).body(productNew);
     }
 
+    /**
+     * Endpoint used to do a product's update.
+     * @param product with the update information.
+     * @param result used to handle validations.
+     * @param id in the endpoint's path.
+     * @return updated product or Http Status 404 not found.
+     */
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> update(@Valid @RequestBody Product product, BindingResult result, @PathVariable Long id){
@@ -70,6 +92,11 @@ public class ProductController {
         return ResponseEntity.notFound().build();
     }
 
+    /**
+     * Endpoint used to delete a Product
+     * @param id in the endpoint's path.
+     * @return Http status Ok or Not found.
+     */
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> delete(@PathVariable Long id){

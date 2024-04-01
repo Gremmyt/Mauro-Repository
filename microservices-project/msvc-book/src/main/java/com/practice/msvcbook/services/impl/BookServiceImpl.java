@@ -44,7 +44,7 @@ public class BookServiceImpl implements BookService {
         bookEntity.setId(id);
 
         return bookRepository.findById(id).map(existBook->{
-            Optional.ofNullable(bookEntity.getName()).ifPresent(existBook::setName);
+            Optional.ofNullable(bookEntity.getTitle()).ifPresent(existBook::setTitle);
             Optional.ofNullable(bookEntity.getAuthorId()).ifPresent(existBook::setAuthorId);
             BookEntity updatedBookEntity = bookRepository.save(existBook);
             return updatedBookEntity;

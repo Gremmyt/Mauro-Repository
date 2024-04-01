@@ -24,6 +24,10 @@ public class AuthorController {
     @Autowired
     private AuthorService authorService;
 
+    /**
+     * Endpoint used to create an Author in the database
+     * @param authorDto Object containing information about the author to be created.
+     */
     @PostMapping
     public ResponseEntity<AuthorDto> save(@RequestBody AuthorDto authorDto){
         AuthorEntity authorEntity = authorMapper.mapFrom(authorDto);
@@ -33,6 +37,12 @@ public class AuthorController {
                 HttpStatus.CREATED);
     }
 
+    /**
+     * Endpoint used to find an Author by its ID, if the Author exists returns the
+     * Author and a Http Status 200 OK, if the Author doesn't exist it returns a Http
+     * status 404 not found.
+     * @param id in the endpoint's path
+     */
     @GetMapping("/{id}")
     public ResponseEntity<AuthorDto> findById(@PathVariable Long id){
         if (!authorService.existsById(id)){
@@ -44,12 +54,22 @@ public class AuthorController {
                 HttpStatus.OK);
     }
 
+    /**
+     * Endpoint that returns all the existing Authors in the database
+     */
     @GetMapping
     public List<AuthorDto> findAll(){
         return authorService.findAll()
                 .stream().map(authorMapper::mapTo).collect(Collectors.toList());
     }
 
+    /**
+     * Endpoint used to fully update an existing Author found by its ID, if the Author exists returns the
+     * updated Author and a Http Status 200 OK, if the Author doesn't exist it returns a Http
+     * status 404 not found.
+     * @param id in the endpoint's path
+     * @param authorDto Object containing information about the author to be updated.
+     */
     @PutMapping("/{id}")
     public ResponseEntity<AuthorDto> fullUpdate(
             @RequestBody AuthorDto authorDto,
@@ -65,6 +85,13 @@ public class AuthorController {
                 HttpStatus.OK);
     }
 
+    /**
+     * Endpoint used to partially update an existing Author found by its ID, if the Author exists returns the
+     * updated Author and a Http Status 200 OK, if the Author doesn't exist it returns a Http
+     * status 404 not found.
+     * @param id in the endpoint's path
+     * @param authorDto Object containing information about the author to be updated.
+     */
     @PatchMapping("/{id}")
     public ResponseEntity<AuthorDto> partialUpdate(
             @RequestBody AuthorDto authorDto,
@@ -80,6 +107,12 @@ public class AuthorController {
                 HttpStatus.OK);
     }
 
+    /**
+     * Endpoint used to delete an Author by its ID, if the Author exists returns a
+     * Http Status 204 No Content after it's deleted, if the Author doesn't exist
+     * it returns a Http status 404 not found.
+     * @param id in the endpoint's path
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable Long id){
         if (!authorService.existsById(id)){
